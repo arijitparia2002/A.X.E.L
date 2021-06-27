@@ -37,6 +37,7 @@ def speak_assis(audio):
     gTTS(audio).save('Assis.mp3')
     playsound('Assis.mp3')
 
+
 def wake_up_call():
     r = sr.Recognizer()
 
@@ -55,6 +56,7 @@ def wake_up_call():
 
     return query.lower()
 
+
 def take_command():
     """
     Takes voice command from mic, and returns string output.
@@ -67,7 +69,7 @@ def take_command():
 
     try:
         print("Recognizing...")
-        query = r.recognize_google(audio)
+        query = r.recognize_google(audio, language = 'en')
         print(f" Your command : {query}")
 
     except Exception as e:
@@ -131,7 +133,7 @@ def task_exe():
 
         # google search
         elif 'search' in query:
-            query.replace('search', '')
+            query = query.replace('search', '')
             google_search(query)
 
         elif 'good afternoon' in query or 'good morning' in query or 'good evening' in query:
@@ -167,14 +169,18 @@ def task_exe():
             calculator(query)
 
         elif 'temperature' in query:
-            temperature(query)
-        
+            speak('Ok sir! searching...')
+            speak(f'According to my database, it\'s {temperature(query)}')
+
+        elif 'time' in query:
+            say_time()
+
         # break the loop, for it to rest
         elif 'rest now' in query:
             speak('Ok sir! i am going to sleep mode. Call me anytime!')
             break
 
-        elif 'none' not in query:
+        elif 'None' not in query:
             speak('Anything else i can do for you sir?')
 
 
@@ -184,8 +190,11 @@ if __name__ == '__main__':
         if 'wake up' in permission:
             speak('Yes sir! I am awake. what can i do for you.')
             task_exe()
+
         elif 'good afternoon' in permission or 'good morning' in permission or 'good evening' in permission:
-            wish_me()
+            startup()
+            speak('let\'s get started sir! what can i do for you')
             task_exe()
+
         elif 'go offline' in permission or 'shut down' in permission:
             break

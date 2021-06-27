@@ -6,7 +6,8 @@ import os
 import webbrowser as web
 from pywikihow import WikiHow, search_wikihow
 import wolframalpha  # wolfram alpha site
-import  datetime
+import datetime
+import playsound
 
 wolfram_api_key = 'L4284H-2KUK99QVH4'
 
@@ -18,6 +19,7 @@ newVoiceRate = 190
 engine.setProperty('rate', newVoiceRate)
 # print(voices)b
 
+
 def wish_me():
     hour = int(datetime.datetime.now().hour)
     if hour >= 0 and hour < 12:
@@ -27,8 +29,14 @@ def wish_me():
     else:
         speak("Good evening sir!")
 
-    speak("Hope you are great sir!, How can i help you?")
+    speak("Hope you are doing great !")
 
+def startup():
+    playsound('Database\\Sounds\\wake_up.mp3')
+    temp = str(temperature('temparature in gosaba'))
+    wish_me()
+    say_time()
+    speak('temparature outside is,{temp}')
 
 def speak(audio):
     engine.say(audio)
@@ -93,6 +101,11 @@ def alarm(command):
     os.startfile('Database\\extra_programs\\alarm.pyw')
 
 
+def say_time():
+    str_time = datetime.datetime.now().strftime("%I:%M:%S %p")
+    speak(f"The current time is {str_time}")
+
+
 def youTube_download():
     time.sleep(3)
     os.startfile('Database\\extra_programs\\yt_download.pyw')
@@ -129,11 +142,9 @@ def calculator(query):
     speak(f'The result is: {result}')
 
 
-def temperature(query):
+def temperature(query):  # returns the temparature
     result = wolfram(query)
-    speak('Ok sir! searching...')
-    result = wolfram(query)
-    speak(f'According to my database, it\'s {result}')
+    return (f'{result}')
 
 
 if __name__ == '__main__':

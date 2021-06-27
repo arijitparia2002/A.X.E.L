@@ -44,12 +44,12 @@ def ring_alarm(set_alarm_command):
     current_time = datetime.datetime.now().strftime("%I:%M %p")
     print(current_time)
 
-    if 'AM' in current_time and 'AM' in alarm_time:
-        if alarm_time < current_time:
-            speak(f'It\'s already past {alarm_time} sir! please give me a valid time!')
-    elif 'PM' in current_time and 'PM' in alarm_time:
-        if alarm_time < current_time:
-            speak(f'It\'s already past {alarm_time} sir! please give me a valid time!')
+    # if 'AM' in current_time and 'AM' in alarm_time:
+    #     if alarm_time < current_time:
+    #         speak(f'It\'s already past {alarm_time} sir! please give me a valid time!')
+    # elif 'PM' in current_time and 'PM' in alarm_time:
+    #     if alarm_time < current_time:
+    #         speak(f'It\'s already past {alarm_time} sir! please give me a valid time!')
 
     while 1:
 
