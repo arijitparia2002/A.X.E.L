@@ -38,7 +38,6 @@ def ring_alarm(set_alarm_command):
     if 'pm' in set_alarm_command:
         alarm_time = alarm_time + ' PM'
 
-    
     print(alarm_time)
     speak(f'Done sir! I have turned on the alarm for {alarm_time}')
     current_time = datetime.datetime.now().strftime("%I:%M %p")
@@ -63,9 +62,21 @@ def ring_alarm(set_alarm_command):
             print('Wake up Sir!')
 
             playsound('Database\\Sounds\\alarm.wav')
+            # stop the alarm when ringing
+            try:
+                with open('data.txt', 'r+') as f:
+                    command = f.read()
 
+                    # extracted_time.seek(0)
+                    f.truncate(0)
+                if 'stop' in command and 'alarm' in command:
+                    speak('ok sir! Terminating the alarm..')
+                    break
+            except:
+                pass
+        
         elif alarm_time < current_time:
-            
+
             break
 
 

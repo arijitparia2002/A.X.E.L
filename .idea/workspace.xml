@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="2679424d-f349-41c1-bd60-64a0524eafbc" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/AXEL.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AXEl_UI.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AXEl_UI.ui" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Database/GUI/Code.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Database/GUI/axel.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Database/GUI/botton.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Database/GUI/earth.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Database/GUI/initial.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Database/GUI/reactor.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Database/GUI/reactor2.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Database/GUI/scifi.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Database/Sounds/shutdown.mp3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Features.py" beforeDir="false" afterPath="$PROJECT_DIR$/Features.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1uc1MxRZl7Ta2OwjH5pmxPDob16" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2679424d-f349-41c1-bd60-64a0524eafbc" name="Default Changelist" comment="" />
+      <created>1624950023082</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1624950023082</updated>
+    </task>
+    <servers />
+  </component>
+</project>

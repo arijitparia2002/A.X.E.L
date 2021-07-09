@@ -7,9 +7,15 @@ import webbrowser as web
 from pywikihow import WikiHow, search_wikihow
 import wolframalpha  # wolfram alpha site
 import datetime
-import playsound
+from playsound import playsound
+import random
+import speech_recognition as sr
+import pyautogui
+
 
 wolfram_api_key = 'L4284H-2KUK99QVH4'
+whatsapp_path = 'C:\\Users\\ariji\\AppData\\Local\\WhatsApp\\WhatsApp.exe'
+messenger_path = 'C:\\Users\\ariji\\AppData\\Local\\Programs\\Messenger\\Messenger.exe'
 
 
 engine = pyttsx3.init('sapi5')
@@ -18,6 +24,32 @@ engine.setProperty('voice', voices[0].id)  # select 1 voice among the voices
 newVoiceRate = 190
 engine.setProperty('rate', newVoiceRate)
 # print(voices)b
+
+
+def take_command():
+    """
+    Takes voice command from mic, and returns string output.
+    """
+    r = sr.Recognizer()
+
+    with sr.Microphone() as source:
+        print("I am listening...")
+        audio = r.listen(source)
+
+    try:
+        print("Recognizing...")
+        query = r.recognize_google(audio, language='en')
+        print(f" Your command : {query}")
+
+    except Exception as e:
+        print(e)
+        # print("Say that again please!!")
+        ans = ["Say that again please!!",
+               'sorry sir! i did not get that.', 'please repeat again sir!']
+        speak(random.choice(ans))
+        return "None"
+
+    return query.lower()
 
 
 def wish_me():
@@ -31,12 +63,17 @@ def wish_me():
 
     speak("Hope you are doing great !")
 
+
 def startup():
     playsound('Database\\Sounds\\wake_up.mp3')
-    temp = str(temperature('temparature in gosaba'))
     wish_me()
     say_time()
-    speak('temparature outside is,{temp}')
+
+
+def shutdown():
+    speak("ok sir! Have a great day, Going offline... ")
+    playsound('Database\\Sounds\\shutdown.mp3')
+
 
 def speak(audio):
     engine.say(audio)
@@ -74,6 +111,7 @@ def google_search(text_command):
     print(f'Topic : {topic}')
 
     Query = str(text_command)
+    speak('Opening google chrome:')
     speak(f'This is the search results for, {Query}')
     # search the whole command on google
     pywhatkit.search(Query)
@@ -92,6 +130,14 @@ def google_search(text_command):
         print(f'wikipidia result : {result}')
         speak(f'according to wikipidia,  {result}')
 
+    speak(f'sir! If you want me to slose this tab, say yes !')
+    reply = take_command()
+    
+    if 'yes' in reply or 'ok' in reply:
+        pyautogui.hotkey('ctrl', 'w')
+    else:
+        speak('keeping the search result tab open!')
+
 
 def alarm(command):
     with open('data.txt', 'a')as f:
@@ -102,7 +148,7 @@ def alarm(command):
 
 
 def say_time():
-    str_time = datetime.datetime.now().strftime("%I:%M:%S %p")
+    str_time = datetime.datetime.now().strftime("%I:%M %p")
     speak(f"The current time is {str_time}")
 
 
@@ -134,21 +180,229 @@ def calculator(query):
     query = query.replace('multiply by', '*')
     query = query.replace('devide', '/')
     query = query.replace('by', '/')
+    query = query.replace('point', '.')
+    query = query.replace('to the power', '^')
 
     expression = str(query)
     print(f'Expression : {expression}')
-    result = wolfram(expression)
-    result = result.replace('/', 'devided by')
-    speak(f'The result is: {result}')
+    try:
+        result = wolfram(expression)
+        result = result.replace('/', 'devided by')
+        speak(f'The result is: {result}')
+    except Exception as e:
+        print(f'e')
 
 
 def temperature(query):  # returns the temparature
     result = wolfram(query)
     return (f'{result}')
 
+def whatsapp_msg(query):
+    if 'to' not in query:
+        speak('who or where do want me to send message')
+        name = take_command()
+    else:
+        name = query
+    while 1:
+        name = name.replace('the ', '')
+        name = name.replace('a ', '')
+        name = name.replace('name ', '')
+        name = name.replace('is ', '')
+        name = name.replace('to ', '')
+        name = name.replace('message ', '')
+        if 'None' not in name:
+            speak(f'Did you say the name , {name}')
+            reply = take_command()
+            if 'yes' in reply:
+                speak('ok')
+            elif 'close whatsapp' in reply:
+                speak('ok sir! closing whatsapp.')
+                break
+            else:
+                speak('Tell me the name again sir!,')
+                name = take_command()
+                continue
+
+        else:
+            name = take_command()
+            continue
+
+        speak('What you want me to send.')
+        while 1:
+            msg = take_command()
+            if 'None' not in msg:
+                speak(f'Your message is, {msg} , do you want me to send sir?')
+                print('fuck')
+                reply = take_command()
+                if 'yes' in reply or 'sure' in reply:
+                    os.startfile(whatsapp_path)
+                    time.sleep(12)
+                    pyautogui.press('tab')
+                    time.sleep(1)
+                    pyautogui.write(name)
+                    time.sleep(1)
+                    pyautogui.press('tab')
+                    time.sleep(0.5)
+                    pyautogui.press('enter')
+                    pyautogui.write(msg)
+                    pyautogui.press('enter')
+                    speak('Message sent sir!')
+                    break
+                elif 'no' in reply:
+                    speak('do you want to repeat the msg,')
+                    reply = take_command()
+                    if 'close whatsapp' in reply or 'no' in reply:
+                        speak('ok sir closing whatsapp...')
+                        pyautogui.hotkey('ctrl', 'w')
+                        break
+                    else:
+                        speak('please repeat your msg.')
+                        continue
+            else:
+                speak('please repeat the message.')
+                continue
+
+        break
+        # pywhatkit.sendwhatmsg('+913897831712','bluh bluh',18,44)
+        # pywhatkit.sendwhatmsg_to_group('Dqe95xHr0bn4sQv7rsqAN9', 'This is a demo msg for testing.', 18,59)
+
+def spam_here():
+    speak('Tell me the message to spam')
+    spam = take_command()
+    speak(f'The message is {spam}')
+    speak(f'Should i start sir?')
+    reply = take_command()
+    if 'no' not in reply and 'None' not in reply:
+        try:
+            speak(f'How many times should i spam ?')
+            number = [x for x in take_command().split() if x.isdigit()==True][0]
+            print(number)
+            with open('data.txt', 'a')as f:
+                f.write(f'{spam}||{number}')
+                
+            print(f'{spam} {number}')
+            time.sleep(2)
+            os.startfile('Database\\extra_programs\\spam_engine.pyw')
+        except Exception:
+            speak(f'Sorry sir there was an error! please try again!')
+    else:
+        speak(f'ok sir exiting spam...')
+
+def nasa_news_teller(query):#takes query including date
+    date = date_extract(query)
+    from Database.extra_programs.nasa import nasa_news
+    nasa_news(date)
+    
+def date_extract(text):
+    MONTHS = {"january": '01', "february": '02', "march": '03', "april": '04',
+              "may": '05', "june": '06', "july": '07', "august": '08', "september": '09', "october": '10', "november": '11', "december": '12'}
+    DAY_EXTENTIONS = ["rd", "th", "st", "nd"]
+    
+    if 'latest' in text or 'recent' in text:
+        import datetime
+        date = datetime.date.today()
+    else:
+        for word in text.split():
+            if word in MONTHS.keys():
+                month = MONTHS[word]
+            elif word.isdigit() and len(word) == 4:
+                year = str(word)
+            elif word.isdigit():
+                day = int(word)
+            else:
+                for ext in DAY_EXTENTIONS:
+                    found = word.find(ext)
+                    if found > 0:
+                        try:
+                            day = int(word[:found])
+                        except:
+                            pass
+        # print(year,day,month)
+        if len(str(day)) < 2:
+            day = '0' + str(day)
+        else:
+            day = str(day)
+        date = year + '-' + month + '-' + day
+
+    print(date)
+    return date
+
+def messenger_msg(query):
+    if 'to' not in query:
+        speak('who, or where, do want me to send message : ')
+        name = take_command()
+    else:
+        name = query
+    while 1:
+        name = name.replace('the ', '')
+        name = name.replace('from ', '')
+        name = name.replace('on ', '')
+        name = name.replace('a ', '')
+        name = name.replace('name ', '')
+        name = name.replace('is ', '')
+        name = name.replace('to ', '')
+        name = name.replace('message ', '')
+        name = name.replace(' ', '')
+        if 'None' not in name:
+            speak(f'Did you say the name , {name}')
+            reply = take_command()
+            if 'yes' in reply:
+                speak('ok')
+            elif 'close messenger' in reply:
+                speak('ok sir! closing messenger.')
+                break
+            else:
+                speak('Tell me the name again sir!,')
+                name = take_command()
+                continue
+
+        else:
+            name = take_command()
+            continue
+        
+        print(name)
+        speak('What you want me to send : ')
+        while 1:
+            msg = take_command()
+            if 'None' not in msg:
+                speak(f'Your message is, {msg} , do you want me to send sir?')
+                print('fuck')
+                reply = take_command()
+                if 'yes' in reply or 'sure' in reply:
+                    speak('ok sir! sending messege...')
+                    os.startfile(messenger_path)
+                    time.sleep(12)
+                    pyautogui.hotkey('ctrl' , 'k')
+                    time.sleep(2)
+                    pyautogui.write(name)
+                    time.sleep(5)
+                    pyautogui.press('down')
+                    time.sleep(2)
+                    pyautogui.press('enter')
+                    time.sleep(2)
+                    pyautogui.write(msg)
+                    time.sleep(2)
+                    pyautogui.press('enter')
+                    speak('Message sent sir!')
+                    break
+                elif 'no' in reply:
+                    speak('do you want to repeat the msg,')
+                    reply = take_command()
+                    if 'close messenger' in reply or 'no' in reply:
+                        speak('ok sir closing messsenger...')
+                        # pyautogui.hotkey('ctrl', 'w')
+                        break
+                    else:
+                        speak('please repeat your msg.')
+                        continue
+            else:
+                speak('please repeat the message.')
+                continue
+
+        break
 
 if __name__ == '__main__':
     # google_search('who is iron man')
     #alarm('set alarm at 8:46 pm.')
     # youTube_download()
-    print(wolfram('weather in gosaba'))
+    spam_here()
