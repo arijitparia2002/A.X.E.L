@@ -17,7 +17,6 @@ from playsound import playsound
 from Features import *
 import random
 
-
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
 engine.setProperty('voice', voices[0].id)  # select 1 voice among the voices
@@ -74,9 +73,9 @@ def take_command():
     except Exception as e:
         print(e)
         # print("Say that again please!!")
-        ans = ["Say that again please!!",
-               'sorry sir! i did not get that.', 'please repeat again sir!']
-        speak(random.choice(ans))
+        # ans = ["Say that again please!!",
+        #        'sorry sir! i did not get that.', 'please repeat again sir!']
+        # speak(random.choice(ans))
         return "None"
 
     return query.lower()
@@ -234,7 +233,7 @@ def task_exe():
             speak('Ok sir! i am going to sleep mode. Call me anytime!')
             break
 
-        elif 'go offline' in query or 'shut down' in query:
+        elif ('go offline' in query or 'shut down' in query) and 'axel' in query or 'excel' in query:
             shutdown()
             quit()
 
@@ -305,7 +304,7 @@ def task_exe():
         elif 'mute' in query or 'unmute' in query:
             pyautogui.press('volumemute')
             speak('Unmuted sir!')
-
+    ###############################Space Exploration #########################
         elif 'nasa' in query and 'news ' in query:
             try:
                 nasa_news_teller(query)
@@ -313,7 +312,15 @@ def task_exe():
                 print(e)
                 speak('Sorry sir, there was an error while extracting the information. Maybe try another date.')
 
-        elif 'shutdown ' in query and 'pc' in query or 'device' in query or 'laptop' in query:
+        elif 'mars' in query and 'images' in query or  'picture' in query or 'image' in query or  'pictures' in query:
+            try:
+                mars_image_viewer(query)
+            except Exception as e:
+                print(e)
+                speak('Sorry sir, there was an error while extracting the information. Maybe try another date.')
+    
+    ##########################################################################
+        elif 'shut down ' in query and 'pc' in query or 'device' in query or 'laptop' in query:
             speak('Do you want to shut down the device sir? say yes or no')
             ans = take_command()
             if 'yes' in ans:
@@ -338,10 +345,21 @@ def task_exe():
             os.system('taskkill /f /im Messenger.exe')
             speak('OK sir, closing messenger .')   
 
+        elif 'call' in query and 'messenger' in query:
+            os.system('taskkill /f /im Messenger.exe')
+            query = query.replace('messenger','')
+            query = query.replace('call ', '')
+            messenger_call(query)
+            speak('ok sir,enjoy you call ! going in rest mode.')
+            break
 
         else:
             no_query_loop += 1
-            if no_query_loop == 2:
+            if no_query_loop == 1:
+                ans = ["Say that again please!!",
+                'sorry sir! i did not get that.', 'please repeat again sir!']
+                speak(random.choice(ans))
+            elif no_query_loop == 2:
                 speak('Anything else i can do for you sir?')
             elif no_query_loop == 3:
                 speak('Sir! Are you there? please say something!')
@@ -361,6 +379,7 @@ def task_exe():
 
 
 def run_axel():
+    
     i = 1
     while 1:
         # storing the outside temparature and weather
@@ -369,6 +388,7 @@ def run_axel():
             i += 1
 
         permission = wake_up_call()
+        
         if 'wake up' in permission:
             speak('Yes sir! I am awake. what can i do for you.')
             task_exe()

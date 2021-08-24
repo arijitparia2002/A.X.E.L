@@ -130,14 +130,13 @@ def google_search(text_command):
         print(f'wikipidia result : {result}')
         speak(f'according to wikipidia,  {result}')
 
-    speak(f'sir! If you want me to slose this tab, say yes !')
+    speak(f'sir! If you want me to close this tab, say yes !')
     reply = take_command()
     
     if 'yes' in reply or 'ok' in reply:
         pyautogui.hotkey('ctrl', 'w')
     else:
         speak('keeping the search result tab open!')
-
 
 def alarm(command):
     with open('data.txt', 'a')as f:
@@ -146,16 +145,13 @@ def alarm(command):
     time.sleep(2)
     os.startfile('Database\\extra_programs\\alarm.pyw')
 
-
 def say_time():
     str_time = datetime.datetime.now().strftime("%I:%M %p")
     speak(f"The current time is {str_time}")
 
-
 def youTube_download():
     time.sleep(3)
     os.startfile('Database\\extra_programs\\yt_download.pyw')
-
 
 def wolfram(query):
 
@@ -168,7 +164,6 @@ def wolfram(query):
     except Exception as e:
         print(e)
         speak('Sorry sir! could not find the answere of your question. Please try again!')
-
 
 def calculator(query):
     speak('Ok sir calculating...')
@@ -191,7 +186,6 @@ def calculator(query):
         speak(f'The result is: {result}')
     except Exception as e:
         print(f'e')
-
 
 def temperature(query):  # returns the temparature
     result = wolfram(query)
@@ -293,6 +287,11 @@ def nasa_news_teller(query):#takes query including date
     from Database.extra_programs.nasa import nasa_news
     nasa_news(date)
     
+def mars_image_viewer(query):#takes query including date
+    date = date_extract(query)
+    from Database.extra_programs.nasa import mars_image
+    mars_image(date)
+
 def date_extract(text):
     MONTHS = {"january": '01', "february": '02', "march": '03', "april": '04',
               "may": '05', "june": '06', "july": '07', "august": '08', "september": '09', "october": '10', "november": '11', "december": '12'}
@@ -366,7 +365,6 @@ def messenger_msg(query):
             msg = take_command()
             if 'None' not in msg:
                 speak(f'Your message is, {msg} , do you want me to send sir?')
-                print('fuck')
                 reply = take_command()
                 if 'yes' in reply or 'sure' in reply:
                     speak('ok sir! sending messege...')
@@ -398,6 +396,79 @@ def messenger_msg(query):
             else:
                 speak('please repeat the message.')
                 continue
+
+        break
+
+def messenger_call(query):
+
+    name = query
+    while 1:
+        name = name.replace('the ', '')
+        name = name.replace('from ', '')
+        name = name.replace('on ', '')
+        # name = name.replace('a ', '')
+        name = name.replace('name ', '')
+        name = name.replace('is ', '')
+        name = name.replace('to ', '')
+        name = name.replace('message ', '')
+        name = name.replace('call ', '')
+        name = name.replace(' ', '')
+        if 'None' not in name:
+            speak(f'Did you say the name , {name}')
+            reply = take_command()
+            if 'yes' in reply:
+                speak('ok')
+            elif 'close messenger' in reply:
+                speak('ok sir! closing messenger.')
+                break
+            else:
+                speak('Tell me the name again sir!,')
+                name = take_command()
+                continue
+
+        else:
+            name = take_command()
+            continue
+        
+        print(name)
+        try:
+            speak(f'calling {name} from messenger')
+            os.startfile(messenger_path)
+            time.sleep(10)
+            pyautogui.hotkey('ctrl' , 'k')
+            time.sleep(.5)
+            pyautogui.write(name)
+            time.sleep(3)
+            pyautogui.press('down')
+            time.sleep(.2)
+            pyautogui.press('enter')
+            time.sleep(.2)
+            pyautogui.press('tab')
+            time.sleep(.1)
+            pyautogui.hotkey('ctrl' , 'k')
+            time.sleep(1)
+            pyautogui.write(name)
+            time.sleep(2)
+            pyautogui.press('down')
+            time.sleep(.1)
+            pyautogui.press('enter')
+            time.sleep(1)
+            pyautogui.press('tab')
+            time.sleep(.2)
+            pyautogui.hotkey('shift', 'F10')
+            time.sleep(1)
+            pyautogui.press('down')
+            time.sleep(.1)
+            pyautogui.press('down')
+            time.sleep(.2)
+            pyautogui.press('down')
+            time.sleep(.1)
+            pyautogui.press('enter')
+        except Exception as e:
+            print(e)
+            speak("Sorry Sir! There was an error while calling.")
+            speak("Exiting messenger ... ")
+            os.system('taskkill /f /im Messenger.exe')
 
         break
 
