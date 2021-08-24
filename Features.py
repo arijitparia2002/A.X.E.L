@@ -16,6 +16,7 @@ import pyautogui
 wolfram_api_key = 'L4284H-2KUK99QVH4'
 whatsapp_path = 'C:\\Users\\ariji\\AppData\\Local\\WhatsApp\\WhatsApp.exe'
 messenger_path = 'C:\\Users\\ariji\\AppData\\Local\\Programs\\Messenger\\Messenger.exe'
+music_dir = "C:/Users/ariji/Music/songs"
 
 
 engine = pyttsx3.init('sapi5')
@@ -91,6 +92,18 @@ def youTube_play(topic):
     speak(f'playing video from youtube on the topic {topic}')
     print(f'Topic : {topic}')
     pywhatkit.playonyt(topic)
+
+def play_music_vlc():
+    os.system('taskkill /f /im vlc.exe')
+    songs = os.listdir(music_dir)
+    print(songs)
+    # choosing a random song
+    song = random.choice(songs)
+    song_path = os.path.join(music_dir, song)
+    speak(f"Playing {song}")
+    os.startfile(song_path)
+    pyautogui.hotkey('win', 'M')
+    speak('Enjoy the music sir...')
 
 
 def google_search(text_command):

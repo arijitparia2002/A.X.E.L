@@ -155,5 +155,5 @@ def mars_image(date):
 
 
 if __name__ == '__main__':
-    mars_image('2020-11-14')
+    nasa_news('2020-11-14')
     # pyautogui.hotkey('alt','F4')

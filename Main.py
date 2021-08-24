@@ -19,7 +19,7 @@ import random
 
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
-engine.setProperty('voice', voices[0].id)  # select 1 voice among the voices
+engine.setProperty('voice', voices[1].id)  # select 1 voice among the voices
 newVoiceRate = 185
 engine.setProperty('rate', newVoiceRate)
 # print(voices)b
@@ -76,6 +76,7 @@ def take_command():
         # ans = ["Say that again please!!",
         #        'sorry sir! i did not get that.', 'please repeat again sir!']
         # speak(random.choice(ans))
+        print('None')
         return "None"
 
     return query.lower()
@@ -101,6 +102,7 @@ def take_command_hindi():
         print(e)
         # print("Say that again please!!")
         speak("Say that again please!!")
+        print('none')
         return "None"
 
     return query.lower()
@@ -136,20 +138,10 @@ def task_exe():
         elif "close" in query and "chrome" in query:
             speak('Ok sir! closing chrome')
             os.system('taskkill /f /im chrome.exe')
-            break
+            
 
         elif 'play' in query and 'music' in query or 'song' in query:
-            os.system('taskkill /f /im vlc.exe')
-            music_dir = "C:/Users/ariji/Music/songs"
-            songs = os.listdir(music_dir)
-            print(songs)
-            # choosing a random song
-            song = random.choice(songs)
-            song_path = os.path.join(music_dir, song)
-            speak(f"Playing {song}")
-            os.startfile(song_path)
-            pyautogui.hotkey('win', 'M')
-            speak('Enjoy the music sir...')
+            play_music_vlc()
             break
 
         elif 'stop' in query and 'music' in query:
@@ -233,7 +225,7 @@ def task_exe():
             speak('Ok sir! i am going to sleep mode. Call me anytime!')
             break
 
-        elif ('go offline' in query or 'shut down' in query) and 'axel' in query or 'excel' in query:
+        elif ('go offline' in query or 'shut down' in query) and ('axel' in query or 'excel' in query):
             shutdown()
             quit()
 
@@ -410,6 +402,7 @@ def run_axel():
 
 if __name__ == '__main__':
     run_axel()
+    # task_exe()
 
 
 
