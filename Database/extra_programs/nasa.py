@@ -9,7 +9,7 @@ import speech_recognition as sr
 
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
-engine.setProperty('voice', voices[0].id)  # select 1 voice among the voices
+engine.setProperty('voice', voices[8].id)  # select 1 voice among the voices
 newVoiceRate = 190
 engine.setProperty('rate', newVoiceRate)
 # print(voices)

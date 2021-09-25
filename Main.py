@@ -19,7 +19,7 @@ import random
 
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
-engine.setProperty('voice', voices[1].id)  # select 1 voice among the voices
+engine.setProperty('voice', voices[8].id)  # select 1 voice among the voices
 newVoiceRate = 185
 engine.setProperty('rate', newVoiceRate)
 # print(voices)b
