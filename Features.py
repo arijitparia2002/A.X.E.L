@@ -96,11 +96,12 @@ def youTube_play(topic):
 def play_music_vlc():
     os.system('taskkill /f /im vlc.exe')
     songs = os.listdir(music_dir)
-    print(songs)
+    
     # choosing a random song
     song = random.choice(songs)
     song_path = os.path.join(music_dir, song)
     speak(f"Playing {song}")
+    print(f"Playing {song}")
     os.startfile(song_path)
     pyautogui.hotkey('win', 'M')
     speak('Enjoy the music sir...')
