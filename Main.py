@@ -153,19 +153,19 @@ def task_exe():
             query = query.replace('search', '')
             google_search(query)
             time.sleep(1)
-            speak('Do you want me to close the chrome window sir?say yes or no')
-            while 1:
-                reply = take_command()
-                if 'yes' in reply:
-                    speak('Ok sir! closing chrome')
-                    os.system('taskkill /f /im chrome.exe')
-                    break
+            # speak('Do you want me to close the chrome window sir?say yes or no')
+            # while 1:
+            #     reply = take_command()
+            #     if 'yes' in reply:
+            #         speak('Ok sir! closing chrome')
+            #         os.system('taskkill /f /im chrome.exe')
+            #         break
 
-                elif 'no' in reply:
-                    speak('Ok sir!')
-                    break
-                else:
-                    speak('plese say , yes or no sir!')
+            #     elif 'no' in reply:
+            #         speak('Ok sir!')
+            #         break
+            #     else:
+            #         speak('plese say , yes or no sir!')
             no_query_loop = 0
 
         elif 'good afternoon' in query or 'good morning' in query or 'good evening' in query:

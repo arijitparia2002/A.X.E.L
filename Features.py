@@ -93,10 +93,11 @@ def youTube_play(topic):
     print(f'Topic : {topic}')
     pywhatkit.playonyt(topic)
 
+
 def play_music_vlc():
     os.system('taskkill /f /im vlc.exe')
     songs = os.listdir(music_dir)
-    
+
     # choosing a random song
     song = random.choice(songs)
     song_path = os.path.join(music_dir, song)
@@ -125,10 +126,8 @@ def google_search(text_command):
     print(f'Topic : {topic}')
 
     Query = str(text_command)
-    speak('Opening google chrome:')
-    speak(f'This is the search results for, {Query}')
     # search the whole command on google
-    pywhatkit.search(Query)
+    speak('OK sir!')
 
     if 'how to' in Query:
         # give a list of instruction of how to ....
@@ -138,19 +137,26 @@ def google_search(text_command):
         assert len(how_to_function) == 1
         how_to_function[0].print()
         speak(how_to_function[0].summary)
+        speak("Done Sir!")
     else:
+        speak('Opening google chrome:')
+        pywhatkit.search(Query)
+        speak(f'This is the search results for, {Query}')
         # speak wikipidia results
         result = wikipedia.summary(Query, 2)
         print(f'wikipidia result : {result}')
         speak(f'according to wikipidia,  {result}')
+        speak("Done Sir!")
 
-    speak(f'sir! If you want me to close this tab, say yes !')
-    reply = take_command()
-    
-    if 'yes' in reply or 'ok' in reply:
-        pyautogui.hotkey('ctrl', 'w')
-    else:
-        speak('keeping the search result tab open!')
+        speak(f'sir! If you want me to close this tab, say yes !')
+        reply = take_command()
+
+        if 'yes' in reply or 'ok' in reply:
+            speak('Ok sir, closing chrome window!')
+            pyautogui.hotkey('ctrl', 'w')
+        else:
+            speak('keeping the search result tab open!')
+
 
 def alarm(command):
     with open('data.txt', 'a')as f:
@@ -159,13 +165,16 @@ def alarm(command):
     time.sleep(1)
     os.startfile('Database\\extra_programs\\alarm.pyw')
 
+
 def say_time():
     str_time = datetime.datetime.now().strftime("%I:%M %p")
     speak(f"The current time is {str_time}")
 
+
 def youTube_download():
     time.sleep(3)
     os.startfile('Database\\extra_programs\\yt_download.pyw')
+
 
 def wolfram(query):
 
@@ -178,6 +187,7 @@ def wolfram(query):
     except Exception as e:
         print(e)
         speak('Sorry sir! could not find the answere of your question. Please try again!')
+
 
 def calculator(query):
     speak('Ok sir calculating...')
@@ -201,9 +211,11 @@ def calculator(query):
     except Exception as e:
         print(f'e')
 
+
 def temperature(query):  # returns the temparature
     result = wolfram(query)
     return (f'{result}')
+
 
 def whatsapp_msg(query):
     if 'to' not in query:
@@ -274,6 +286,7 @@ def whatsapp_msg(query):
         # pywhatkit.sendwhatmsg('+913897831712','bluh bluh',18,44)
         # pywhatkit.sendwhatmsg_to_group('Dqe95xHr0bn4sQv7rsqAN9', 'This is a demo msg for testing.', 18,59)
 
+
 def spam_here():
     speak('Tell me the message to spam')
     spam = take_command()
@@ -283,11 +296,12 @@ def spam_here():
     if 'no' not in reply and 'None' not in reply:
         try:
             speak(f'How many times should i spam ?')
-            number = [x for x in take_command().split() if x.isdigit()==True][0]
+            number = [x for x in take_command().split()
+                      if x.isdigit() == True][0]
             print(number)
             with open('data.txt', 'a')as f:
                 f.write(f'{spam}||{number}')
-                
+
             print(f'{spam} {number}')
             time.sleep(2)
             os.startfile('Database\\extra_programs\\spam_engine.pyw')
@@ -296,21 +310,24 @@ def spam_here():
     else:
         speak(f'ok sir exiting spam...')
 
-def nasa_news_teller(query):#takes query including date
+
+def nasa_news_teller(query):  # takes query including date
     date = date_extract(query)
     from Database.extra_programs.nasa import nasa_news
     nasa_news(date)
-    
-def mars_image_viewer(query):#takes query including date
+
+
+def mars_image_viewer(query):  # takes query including date
     date = date_extract(query)
     from Database.extra_programs.nasa import mars_image
     mars_image(date)
+
 
 def date_extract(text):
     MONTHS = {"january": '01', "february": '02', "march": '03', "april": '04',
               "may": '05', "june": '06', "july": '07', "august": '08', "september": '09', "october": '10', "november": '11', "december": '12'}
     DAY_EXTENTIONS = ["rd", "th", "st", "nd"]
-    
+
     if 'latest' in text or 'recent' in text:
         import datetime
         date = datetime.date.today()
@@ -339,6 +356,7 @@ def date_extract(text):
 
     print(date)
     return date
+
 
 def messenger_msg(query):
     if 'to' not in query:
@@ -372,7 +390,7 @@ def messenger_msg(query):
         else:
             name = take_command()
             continue
-        
+
         print(name)
         speak('What you want me to send : ')
         while 1:
@@ -384,7 +402,7 @@ def messenger_msg(query):
                     speak('ok sir! sending messege...')
                     os.startfile(messenger_path)
                     time.sleep(12)
-                    pyautogui.hotkey('ctrl' , 'k')
+                    pyautogui.hotkey('ctrl', 'k')
                     time.sleep(2)
                     pyautogui.write(name)
                     time.sleep(5)
@@ -412,6 +430,7 @@ def messenger_msg(query):
                 continue
 
         break
+
 
 def messenger_call(query):
 
@@ -443,13 +462,13 @@ def messenger_call(query):
         else:
             name = take_command()
             continue
-        
+
         print(name)
         try:
             speak(f'calling {name} from messenger')
             os.startfile(messenger_path)
             time.sleep(10)
-            pyautogui.hotkey('ctrl' , 'k')
+            pyautogui.hotkey('ctrl', 'k')
             time.sleep(.5)
             pyautogui.write(name)
             time.sleep(3)
@@ -459,7 +478,7 @@ def messenger_call(query):
             time.sleep(.2)
             pyautogui.press('tab')
             time.sleep(.1)
-            pyautogui.hotkey('ctrl' , 'k')
+            pyautogui.hotkey('ctrl', 'k')
             time.sleep(1)
             pyautogui.write(name)
             time.sleep(2)
@@ -485,6 +504,7 @@ def messenger_call(query):
             os.system('taskkill /f /im Messenger.exe')
 
         break
+
 
 if __name__ == '__main__':
     # google_search('who is iron man')
