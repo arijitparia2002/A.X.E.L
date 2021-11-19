@@ -155,7 +155,7 @@ def alarm(command):
     with open('data.txt', 'a')as f:
         f.write(command)
     print(command)
-    time.sleep(2)
+    time.sleep(1)
     os.startfile('Database\\extra_programs\\alarm.pyw')
 
 def say_time():
@@ -243,7 +243,7 @@ def whatsapp_msg(query):
                 reply = take_command()
                 if 'yes' in reply or 'sure' in reply:
                     os.startfile(whatsapp_path)
-                    time.sleep(12)
+                    time.sleep(10)
                     pyautogui.press('tab')
                     time.sleep(1)
                     pyautogui.write(name)
